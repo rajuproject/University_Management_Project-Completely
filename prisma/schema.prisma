@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model AcademicSemister {
+  id                String @id @default(uuid())
+  year              Int
+  title             String
+  code              Int
+  startMonth        String  
+  createAt          DateTime @default(now())
+  updateAt          DateTime @updatedAt 
+  students          Student[]
+  @@map("Academic_Semister")
+}
+
+model AcademicFaculty {
+  id                      String @id @default(uuid())
+  title                   String
+  createAt                DateTime @default(now())
+  updateAt                DateTime @updatedAt
+  academicDepartments     AcademicDepartment[] 
+  students                Student[]
+  @@map("Academic_Faculty")
+}
+
+model AcademicDepartment {
+  id                    String @id @default(uuid())
+  title                 String
+  createAt              DateTime @default(now())
+  updateAt              DateTime @updatedAt 
+  academicFaculty        AcademicFaculty  @relation(fields: [academicFacultyId], references: [id]) 
+  academicFacultyId     String 
+  students              Student[]
+  @@map("Academic_Department")
+}
+
+model Student {
+  id                        String @id @default(uuid())
+  studentId                 String
+  firstName                 String
+  lastName                  String
+  middleName                String
+  profileImage              String
+  email                     String
+  contactNo                 String
+  gender                    String
+  bloodgroup                String
+   createAt                 DateTime @default(now())
+  updateAt                  DateTime @updatedAt 
+  academicSemesterId        String
+  academicSemister          AcademicSemister @relation(fields: [academicSemesterId], references: [id])
+  academicDepartmentId      String
+  academicDepartment        AcademicDepartment @relation(fields: [academicDepartmentId], references: [id])
+  academicFacultyId         String
+  academicFaculty           AcademicFaculty @relation(fields: [academicFacultyId],references: [id])
+}

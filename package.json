@@ -17,7 +17,6 @@
   "license": "ISC",
   "lint-staged": {
     "src/**/*.ts": "npm run lint:prettier"
-
   },
   "devDependencies": {
     "@types/node": "^20.6.2",

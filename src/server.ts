@@ -1,12 +1,12 @@
 
 import app from './app'
+import config from './config';
 
 
-const port = process.env.PORT || 3003
 async function main() {
-    app.listen(port, () => {
+    app.listen(config.port, () => {
         
-        console.log(`Server running at ${port}`);
+        console.log(`Server running at ${config.port}`);
     })
 }
 
